@@ -12,8 +12,7 @@ class Movie extends HiveObject {
   @HiveField(1)
   late String director;
 
-  // @HiveField(2)
-  // late Uint8List image;
-
+  @HiveField(2)
+  late String posterPath;
 
 }

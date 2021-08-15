@@ -12,7 +12,7 @@ class BoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     UserProvider auth = Provider.of<UserProvider>(context);
 
-    switch(auth.authStatus??Status.unauthenticated){
+    switch(auth.authStatus){
       case Status.authenticated : return HomePage(); break ;
       case Status.unauthenticated : return LoginPage(); break;
       case Status.newUser : return LoginPage(); break;

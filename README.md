@@ -1,16 +1,15 @@
-# yellow_movies
+# Purple Movies 
 
 Movies you like and movies you love.
 
-## Getting Started
+<img width="271" src="https://user-images.githubusercontent.com/14312802/129535268-bea2f481-b837-426c-881a-a58f09022a3b.jpeg"><img width="271" src="https://user-images.githubusercontent.com/14312802/129535276-c01113d1-0c8a-4efa-952d-68810f48389c.jpeg"><img width="271" src="https://user-images.githubusercontent.com/14312802/129535288-bce6d1df-eea3-4065-ac76-8c96393a3c4f.jpeg">
 
-This project is a starting point for a Flutter application.
+Login, Add, Edit and Store Locally.
 
-A few resources to get you started if this is your first Flutter project:
+1. Firebase Authentication
+2. Providers User State Management
+3. Hive noSQL local Database.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+

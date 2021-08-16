@@ -18,17 +18,20 @@ class MovieAdapter extends TypeAdapter<Movie> {
     };
     return Movie()
       ..name = fields[0] as String
-      ..director = fields[1] as String;
+      ..director = fields[1] as String
+      ..posterPath = fields[2] as String;
   }
 
   @override
   void write(BinaryWriter writer, Movie obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.director);
+      ..write(obj.director)
+      ..writeByte(2)
+      ..write(obj.posterPath);
   }
 
   @override

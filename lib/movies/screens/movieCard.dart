@@ -14,71 +14,90 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(4),
-      child: Column(
-        children: [
-          Container(
-            height: 420,
-            width: 320,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color:
-                  Color.fromARGB(62, 168, 174, 201),
-                  offset: Offset(0, 9),
-                  blurRadius: 14,
-                ),
-              ],
-            ),
-            child: Stack(
-              children: <Widget>[
-                Image.file(
-                    File(movie.posterPath),
-                    fit: BoxFit.cover,
-                    height: 420,
-                    width: 320,
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left:8.0),
-                      child: RichText(text: TextSpan(children: [
-                        TextSpan(text: '${movie.name} \n', style: TextStyle(fontSize: 22)),
-                        TextSpan(text: '${movie.director} \n', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-
-                      ]))
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.purple.withOpacity(0.8),
+                  offset: Offset(3, 2),
+                  blurRadius: 30)
+            ]),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Container(
+              height: 420,
+              width: 320,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                    Color.fromARGB(62, 168, 174, 201),
+                    offset: Offset(0, 9),
+                    blurRadius: 14,
                   ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextButton.icon(
-                  label: Text('Edit'),
-                  icon: Icon(Icons.edit),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => movieEditDialog(
-                        movie: movie,
-                        onClickedDone: (name, director, posterPath) =>
-                            editMovie(movie, name, director, posterPath),
-                      ),
+                ],
+              ),
+              child: Stack(
+                children: <Widget>[
+                  SizedBox(height: 50),
+                  Container(
 
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Image.file(
+                          File(movie.posterPath),
+                          fit: BoxFit.cover,
+                          height: 420,
+                          width: 320,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                        padding: const EdgeInsets.only(left:8.0),
+                        child: RichText(text: TextSpan(children: [
+                          TextSpan(text: '${movie.name} \n', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                          TextSpan(text: '${movie.director} \n', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+
+                        ]))
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton.icon(
+                    label: Text('Edit',style: TextStyle(color: Colors.purple[300])),
+                    icon: Icon(Icons.edit,color: Colors.purple[300],),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => movieEditDialog(
+                          movie: movie,
+                          onClickedDone: (name, director, posterPath) =>
+                              editMovie(movie, name, director, posterPath),
+                        ),
+
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: TextButton.icon(
-                  label: Text('Delete'),
-                  icon: Icon(Icons.delete),
-                  onPressed: () => deleteMovie(movie),
-                ),
-              )
-            ],
-          )
-        ],
+                Expanded(
+                  child: TextButton.icon(
+                    label: Text('Delete',style: TextStyle(color: Colors.purple[300])),
+                    icon: Icon(Icons.delete,color: Colors.purple[300],),
+                    onPressed: () => deleteMovie(movie),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -13,11 +13,10 @@ import 'movies/model/movie_model.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(MovieAdapter());
-
-  await Hive.openBox<Movie>('movie');
   await Firebase.initializeApp();
 
+  Hive.registerAdapter(MovieAdapter());
+  Hive.openBox<Movie>('movie');
   runApp(
     MyApp()
   );

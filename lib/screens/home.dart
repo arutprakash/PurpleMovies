@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yellow_movies/auth/screens/boarding_page.dart';
+import 'package:yellow_movies/auth/services/user_provider.dart';
 import 'package:yellow_movies/movies/boxes.dart';
 import 'package:yellow_movies/movies/model/movie_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -23,12 +26,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider auth = Provider.of<UserProvider>(context);
+    Hive.openBox<Movie>('movie');
+
     return  Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           title: Text('Purple Movies'),
           centerTitle: true,
           backgroundColor: Colors.purple[400],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.exit_to_app_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () async {
+                if(await auth.logout()){
+                  // Navigator.pop(context);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BoardingPage()));
+                }
+              },
+            )
+          ],
         ),
         body: ValueListenableBuilder<Box<Movie>>(
           valueListenable: Boxes.getMovie().listenable(),
@@ -39,6 +59,7 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.purple[300],
           child: Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
@@ -53,17 +74,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildContent(List<Movie> movies) {
+    UserProvider auth = Provider.of<UserProvider>(context);
     if(movies.isEmpty){
       return Center(
         child: Text(
-          'No Movies Added !',
-          style: TextStyle(fontSize: 24),
+          'Add your fav Movies !!',
+          style: TextStyle(fontSize: 24,color: Colors.purple[300]),
         ),
       );
     } else {
       return Column(
         children: [
-          SizedBox(height: 24),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(8),

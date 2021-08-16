@@ -26,16 +26,15 @@ class UserProvider extends ChangeNotifier {
     String? uid = prefs.getString('userUid');
     print(uid);
 
-    if (prefs.getString('firstTimeUser') != null) {
-      if (uid != null) {
-        if (await getUserData(uid)) {
-          authStatus = Status.authenticated;
-          await checkIfNotifExists();
-        }
-      } else {
-        authStatus = Status.unauthenticated;
+    if (uid != null) {
+      if (await getUserData(uid)) {
+        authStatus = Status.authenticated;
+        print(authStatus);
       }
+    } else {
+      authStatus = Status.unauthenticated;
     }
+
     print(authStatus);
     notifyListeners();
   }
@@ -115,6 +114,10 @@ class UserProvider extends ChangeNotifier {
       assert(user.uid == currentUser!.uid);
 
       print('signInWithGoogle succeeded: $user');
+      authStatus = Status.authenticated;
+      notifyListeners();
+      saveUserDataLocally();
+      Fluttertoast.showToast(msg : "${auth.currentUser!.displayName} Signed in Successfully");
 
       if (!await checkIfUserExists(user.uid)) {
         print("new user");
@@ -122,8 +125,6 @@ class UserProvider extends ChangeNotifier {
           Fluttertoast.showToast(msg : "Signed in Successfully");
           isAuthenticating = false;
           authStatus = Status.newUser;
-          notifyListeners();
-          await checkIfNotifExists();
           notifyListeners();
         } else {
           Fluttertoast.showToast(msg : "Something went wrong please try again");
@@ -138,6 +139,8 @@ class UserProvider extends ChangeNotifier {
         authStatus = Status.authenticated;
         notifyListeners();
       }
+
+
     } else {
       Fluttertoast.showToast(msg : "Something went wrong please try again");
       authStatus = Status.unauthenticated;
@@ -161,25 +164,5 @@ class UserProvider extends ChangeNotifier {
     return isExists;
   }
 
-  checkIfNotifExists() async {
-    var prefs ;
-    prefs = await SharedPreferences.getInstance();
-    var timeStamp = 0;
-    if(prefs.getString('arrivalTime')== null) timeStamp =0;
-    else timeStamp = int.parse(prefs.getString('arrivalTime'));
-    await FirebaseFirestore.instance
-        .collection("Notifications")
-        .where('arrivalTime',isGreaterThan: timeStamp)
-        .limit(1)
-        .get()
-        .then((snap) {
-      if (snap.docs.isNotEmpty) {
-        newNotif = true;
-      } else {
-        newNotif = false;
-      }
-    });
-    notifyListeners();
-  }
 
 }

@@ -15,7 +15,7 @@ class BoardingPage extends StatelessWidget {
     switch(auth.authStatus){
       case Status.authenticated : return HomePage(); break ;
       case Status.unauthenticated : return LoginPage(); break;
-      case Status.newUser : return LoginPage(); break;
+      case Status.newUser : return HomePage(); break;
       case Status.autoLogin : return HomePage(); break;
       default : return LoginPage();
     }
